@@ -1,0 +1,19 @@
+{
+  "project_settings": {
+    "output_root": "store",
+    "vector_db_path": "store/vector_database"
+  },
+  "model_params": {
+    "model_name": "buffalo_1",
+    "det_size": [640, 640]
+  },
+  "video_config": {
+    "stride": 5,
+    "similarity_threshold": 0.65,
+    "miss_tolerance": 3
+  },
+  "run_mode": {
+    "save_mode": 0,
+    "description": "0 = 智能追踪(去重, Smart Tracking), 1 = 全量采集(不去重, Raw Capture)"
+  }
+}
