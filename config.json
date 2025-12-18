@@ -13,7 +13,7 @@
     "miss_tolerance": 3
   },
   "run_mode": {
-    "save_mode": 1,
+    "save_mode": 0,
     "description": "0 = 智能追踪(去重, Smart Tracking), 1 = 全量采集(不去重, Raw Capture)"
   }
 }

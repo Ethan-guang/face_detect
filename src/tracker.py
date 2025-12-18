@@ -14,6 +14,8 @@ class FaceTrack:
         self.best_score = face_data['score']
         self.best_embedding = face_data['embedding']
         self.best_bbox = face_data['bbox']
+        # [新增] 记录最高分出现的帧号，用于可视化截图
+        self.best_frame = frame_id
         self.miss_count = 0
 
 
@@ -51,6 +53,8 @@ class SmartTracker:
                     track.best_score = curr_face['score']
                     track.best_embedding = curr_face['embedding']
                     track.best_bbox = curr_face['bbox']
+                    # [新增] 同步更新最佳帧
+                    track.best_frame = frame_id
             else:
                 # 没匹配上，视为新出现的人
                 self.active_tracks.append(FaceTrack(curr_face, frame_id, timestamp))
@@ -66,7 +70,6 @@ class SmartTracker:
 
     def get_results(self):
         """返回最终序列化结果"""
-        # 将还在画面里的人也加入最终结果
         all_tracks = self.final_tracks + self.active_tracks
         tracks_data = []
         for idx, track in enumerate(all_tracks):
@@ -75,6 +78,7 @@ class SmartTracker:
                 "time_range_ms": [track.start_time, track.end_time],
                 "duration_ms": track.end_time - track.start_time,
                 "best_score": round(track.best_score, 4),
+                "best_frame": track.best_frame,  # 报告里也带上最佳帧
                 "bbox": round_list(track.best_bbox.tolist())
             })
         return tracks_data
